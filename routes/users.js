@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const plm = require("passport-local-mongoose");
+
 
 mongoose.connect("mongodb://127.0.0.1:27017/pinterestdb");
 
@@ -11,8 +13,7 @@ const userSchema = new Schema({
     unique: true,
   },
   password: {
-    type: String,
-    required: true,
+    type: String
   },
   posts: [{
     type : Schema.Types.ObjectId,
@@ -31,6 +32,8 @@ const userSchema = new Schema({
     required: true,
   },
 });
+
+userSchema.plugin(plm);
 
 // Create the User model
 module.exports = mongoose.model('User', userSchema);
