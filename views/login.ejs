@@ -18,22 +18,26 @@
                 class="img1" />
             <p class="header">Welcome to Pinterest</p>
 
-            <form action="/login" method="post">
-                <input type="text" name="username" placeholder="Username" class="detail" /><br />
-                <input type="password" name="password" placeholder="Password" class="detail" />
-                <input type="submit" class="btn int" value="Login">
-            </form>
+            <% if(error.length> 0){ %>
+                <p class="error"><%= error %></p>
+            <% } %>
 
-            <a href="/forgot" style="text-decoration: none;">Forgot your password?</a>
+                    <form action="/login" method="post">
+                        <input type="text" name="username" placeholder="Username" class="detail" /><br />
+                        <input type="password" name="password" placeholder="Password" class="detail" />
+                        <input type="submit" class="btn int" value="Login">
+                    </form>
 
-            <footer>
-                <p>
-                    By continuing, you agree to Pinterest's
-                    <b>Terms of Service, Privacy policy.</b>
-                </p>
-                <hr style="margin-bottom: 10px;">
-                <a href="/" style="text-decoration: none;">New to Pinterest? Sign up</p>
-            </footer>
+                    <a href="/forgot" style="text-decoration: none;">Forgot your password?</a>
+
+                    <footer>
+                        <p>
+                            By continuing, you agree to Pinterest's
+                            <b>Terms of Service, Privacy policy.</b>
+                        </p>
+                        <hr style="margin-bottom: 10px;">
+                        <a href="/" style="text-decoration: none;">New to Pinterest? Sign up</p>
+                    </footer>
         </div>
     </div>
 
