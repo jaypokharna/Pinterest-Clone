@@ -1,5 +1,4 @@
-
-<img src="https://socialify.git.ci/jaypokharna/Pinterest-Clone/image?font=Jost&language=1&name=1&owner=1&pattern=Plus&theme=Light" alt="Pinterest-Clone" width="640" height="320" />
+<p align="center"><img src="https://socialify.git.ci/jaypokharna/Pinterest-Clone/image?font=Jost&language=1&name=1&owner=1&pattern=Plus&theme=Light" alt="Pinterest-Clone" width="640" height="320" /></p>
 
 Pinterest clone - The project that replicates some of the core functionalities of the popular image-sharing platform. Users can create accounts, upload images, organize them into boards, and explore content shared by other users. It provides a visually appealing and user-friendly interface for a seamless experience.
 
