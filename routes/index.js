@@ -4,6 +4,8 @@ const userModel = require("./users");
 const postModel = require("./posts");
 const passport = require('passport');
 const upload = require('./multer')
+const fs = require('fs');
+const path = require('path');
 
 const localStrategy = require("passport-local");
 passport.use(new localStrategy(userModel.authenticate()));
@@ -22,51 +24,10 @@ router.get('/profile' ,isLoggedIn,async function (req, res, next) { //
 res.render("profile",{user});
 });
 
-//get all posts of a perticular user route
-router.get('/alluserposts',async function (req, res, next) {
-  let user = await userModel
-  .findOne({_id:"658e8149d2925d45225288d4"})
-  .populate('posts');
-  res.send(user);
- });
-
-//create new user route
-router.get('/createuser', async function (req, res, next) {
-
-  let createduser = await userModel.create({
-
-    username: "jay",
-    password: "jay",
-    posts: [],
-    email: "jay@gmail.com",
-    fullName: "Jay Sushil Pokharna",
-
-  });
-
-  res.send(createduser)
-
-});
-
-//create new post route
-router.get('/createpost', async function (req, res, next) {
-
-  let createdpost = await postModel.create({
-
-    postText: "Second post",
-    user : "658e8149d2925d45225288d4"
-  
-  });
-
-  let user = await userModel.findOne({_id : '658e8149d2925d45225288d4'});
-  user.posts.push(createdpost._id);
-  await user.save();
-  res.send("Done")
-});
-
 //register route
 router.post('/register',function(req,res){
   const { username, email, fullname } = req.body;
-const userData = new userModel({ username, email, fullName: fullname });
+const userData = new userModel({ username, email, fullName: fullname});
 
 userModel.register(userData,req.body.password)
 .then(function(){
@@ -115,7 +76,6 @@ router.get('/feed',isLoggedIn,async function(req,res,next){
   res.render("feed",{posts});
 });
 
-
 // upload image to own profile route
 router.post('/upload',isLoggedIn,upload.single("file"),async function(req,res,next){
 if(!req.file){
@@ -146,6 +106,25 @@ router.post('/open-profile',isLoggedIn,async function(req,res,next){
 
   res.render('open-profile',{user})
 })
+
+// Save Profile Image Route
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination: './public/images/profile',
+    filename: function (req, file, cb) {
+        cb(null, req.session.passport.user +'.jpg'); // Use a fixed filename for simplicity
+    }
+});
+const uploads = multer({ storage: storage });
+
+router.post('/save-profile-image', isLoggedIn ,uploads.single('imageData'),async (req, res) => {
+  
+   const user = await userModel.findOne({username : req.session.passport.user});
+   user.dp = user.username +".jpg";
+   await user.save();
+   res.redirect();
+
+});
 
 
 module.exports = router;

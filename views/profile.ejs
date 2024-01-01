@@ -10,20 +10,77 @@
   <link rel="shortcut icon" href="https://s.pinimg.com/webapp/favicon-22eb868c.png" type="image/x-icon">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="/stylesheets/dppallet.css">
+  <link rel="stylesheet" href="/stylesheets/profile-pic.css">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+
   <script src="/javascripts/popup-form.js"></script>
-  <script src="/javascripts/profile.js"></script>
+
 </head>
 
 <body>
 
   <div class="profile-container">
     <div class="profile-card">
-      <div class="profile-picture">
-        <img src="https://i.pinimg.com/564x/72/60/44/726044ff9fca15ce43229e39a0c948c6.jpg" alt="Profile Picture">
+
+      <!-- Profile Picture -->
+
+      <div class="profile-pic-container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <div class="confirm-identity">
+                <div class="ci-user d-flex align-items-center justify-content-center">
+                  <div class="ci-user-picture">
+                    <img src="/images/profile/<%= user.dp %>" id="item-img-output"
+                      class="imgpreviewPrf img-fluid" alt="">
+                      <form action="/save-profile-image" method="post">
+                        <input type="hidden" name="profile-pic" value="" id="profile-pic">
+                      </form>
+                  </div>
+                </div>
+                <div class="ci-user-btn upload-button">
+                  <a href="javascript:;" class="userEditeBtn btn-default">
+                    <input type="file" class="item-img file center-block filepreviewprofile">
+                    CHANGE
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      
+      <div class="modal fade cropImageModal" id="cropImagePop" tabindex="-1" role="dialog"
+        aria-labelledby="myModalLabel" aria-hidden="true">
+        <button type="button" class="close-modal-custom" data-dismiss="modal" aria-label="Close"><i
+            class="feather icon-x"></i></button>
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body p-0">
+              <div class="modal-header-bg"></div>
+              <div class="up-photo-title">
+                <h3 class="modal-title">Update Profile Photo</h3>
+              </div>
+              <div class="up-photo-content pb-5">
+
+                <div id="upload-demo" class="center-block">
+                  <h5><i class="fas fa-arrows-alt mr-1"></i> Drag your photo as you require</h5>
+                </div>
+                <div class="upload-action-btn text-center px-2">
+                  <button type="button" id="cropImageBtn" class="btn btn-default btn-medium bg-blue px-3 mr-2">Upload</button>
+                  <button type="button"
+                    class="btn btn-default btn-medium bg-default-light px-3 ml-sm-2 replacePhoto position-relative">Replace
+                    Photo</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Profile Picture -->
+
       <h2 class="name">
         <%= user.fullName %>
       </h2>
@@ -31,7 +88,7 @@
       </h3>
       <div class="buttons">
         <a href="/feed" class="button btn btn-success">Feed</a>
-      <a href="/logout" class="button btn btn-danger">Logout</a>
+        <a href="/logout" class="button btn btn-danger">Logout</a>
       </div>
 
     </div>
@@ -41,14 +98,15 @@
 
   <div class="container">
 
-<% user.posts.forEach(function(post){ %>
-  <div class="box">
-   
-    <a href="/images/uploads/<%= post.image %>" target="_blank" id="overlay">
-      <img src="/images/uploads/<%= post.image %>" alt="image"></a>
-    <div class="caption">#<%= post.postText %> </div>
-  </div>
-<% }) %>
+    <% user.posts.forEach(function(post){ %>
+      <div class="box">
+
+        <a href="/images/uploads/<%= post.image %>" target="_blank" id="overlay">
+          <img src="/images/uploads/<%= post.image %>" alt="image"></a>
+        <div class="caption">#<%= post.postText %>
+        </div>
+      </div>
+      <% }) %>
 
   </div>
 
@@ -76,8 +134,14 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
     crossorigin="anonymous"></script>
-  <script src="/javascripts/profile.js"></script>
+  <!-- Include jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
+  <!-- Include Croppie -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
+
+  <script src="/javascripts/profile-pic.js"></script>
 </body>
 
 </html>
