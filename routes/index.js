@@ -70,11 +70,35 @@ router.get('/logout', function (req, res) {
 });
 
 //feed page route
-router.get('/feed',isLoggedIn,async function(req,res,next){
- 
-  const posts = await postModel.find();
-  res.render("feed",{posts});
+router.get('/feed', isLoggedIn, async function(req, res, next) {
+  let posts;
+
+  posts = await postModel.find();
+
+  res.render("feed", { posts });
 });
+
+router.post('/feed', isLoggedIn, async function(req, res, next) {
+  let posts;
+
+  posts = await postModel.find();
+
+  const filteredPosts = posts.filter(post => {
+    // Convert post text to lowercase and check if it includes the lowercase search string
+    return post.postText.toLowerCase().includes(req.body.search.toLowerCase());
+});
+
+if(filteredPosts.length == 0){
+  console.log("Not Found")
+}
+else{
+  res.render("feed", { posts : filteredPosts });
+}
+
+
+});
+
+
 
 // upload image to own profile route
 router.post('/upload',isLoggedIn,upload.single("file"),async function(req,res,next){

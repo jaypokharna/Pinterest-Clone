@@ -31,7 +31,9 @@
 
         <div class="middle">
             <img src="/images/search.png" alt="">
-            <input type="text" placeholder="Search">
+            <form action="/feed" id="myForm" method="post">
+                <input type="text" id="myInput" placeholder="Search" name="search">
+            </form>
         </div>
 
         <div class="right">
@@ -81,7 +83,29 @@
     </div>
 
     <!-- Feed Container -->
-
+    
+    <script>
+        document.getElementById("myForm").addEventListener("submit", function(event) {
+                event.preventDefault(); // Prevent the default form submission behavior
+    
+                // Get the input value
+                var inputValue = document.getElementById("myInput").value;
+                console.log("Input value:", inputValue);
+    
+                // You can perform further actions with the input value here
+    
+                // Clear the input field after submission
+                document.getElementById("myInput").value = "";
+            });
+    
+            document.getElementById("myInput").addEventListener("keypress", function(event) {
+                // Check if the Enter key (key code 13) was pressed
+                if (event.keyCode === 13) {
+                    event.preventDefault(); // Prevent the default form submission behavior
+                    document.getElementById("myForm").submit(); // Manually submit the form
+                }
+            });
+      </script>
     <script src="/javascripts/drop-down.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 </body>
